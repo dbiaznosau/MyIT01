@@ -11,6 +11,7 @@
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
+        <aspectj.version>1.9.7</aspectj.version>
     </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -26,14 +27,62 @@
             <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.openqa.selenium.client-drivers/selenium-java-client-driver -->
+
+
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-junit4 -->
         <dependency>
-            <groupId>org.openqa.selenium.client-drivers</groupId>
-            <artifactId>selenium-java-client-driver</artifactId>
-            <version>1.0-beta-1</version>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit4</artifactId>
+            <version>2.15.0</version>
             <scope>test</scope>
         </dependency>
 
-    </dependencies>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>3.141.59</version>
+            <scope>test</scope>
+        </dependency>
 
+
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+            <!--Подключаем Surefire плагин-->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.19.1</version>
+            <!--Настраиваем запуск aspectj-->
+            <configuration>
+                <testFailureIgnore>false</testFailureIgnore>
+                <argLine>
+                    -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                </argLine>
+                <properties>
+                    <!--Правила для сбора информации Allure, на которые смотрит aspectj при работе-->
+                    <property>
+                        <name>listener</name>
+                        <value>io.qameta.allure.junit4.AllureJunit4</value>
+                    </property>
+                </properties>
+                <systemProperties>
+                    <!--Результаты Allure складываются в отдельную дирректорию в новом формате-->
+                    <property>
+                        <name>allure.results.directory</name>
+                        <value>${project.build.directory}/allure-results</value>
+                    </property>
+                </systemProperties>
+            </configuration>
+                <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+                <dependencies>
+                <dependency>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjweaver</artifactId>
+                    <version>${aspectj.version}</version>
+                </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 </project>
