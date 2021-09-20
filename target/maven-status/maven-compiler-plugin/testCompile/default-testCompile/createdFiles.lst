@@ -1,4 +1,7 @@
+TestSuite.class
 Mailbox.class
 LoginPage.class
+LoginTest.class
 SendEmailTest.class
 ConfProperties.class
+WebDriverSettings.class

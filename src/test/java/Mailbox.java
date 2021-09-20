@@ -22,26 +22,29 @@ public class Mailbox {
         @FindBy(xpath = "//div[@class=\"T-I T-I-KE L3\"]")
         private WebElement newEmailButton;
 
-        @FindBy(xpath = "//*[@id=\":9f\"]")
+        @FindBy(xpath = "//*[@name=\"to\"]")
         private WebElement toTextbox;
 
-        @FindBy(xpath = "//*[@id=\":a2\"]")
+        @FindBy(xpath = "//*[@class=\"aB gQ pE\"]")
         private WebElement ccButton;
 
-        @FindBy(xpath = "//*[@id=\":6u\"]")
+        @FindBy(xpath = "//*[@name=\"cc\"]")
         private WebElement ccTextbox;
 
-        @FindBy(xpath = "//*[@id=\":7d\"]")
-        private WebElement summaryTextbox;
+        @FindBy(xpath = "//*[@name=\"subjectbox\"]")
+        private WebElement subjectTextbox;
 
-        @FindBy(xpath = "//*[@id=\":67\"]")
+        @FindBy(xpath = "//*[@class=\"Am Al editable LW-avf tS-tW\"]")
         private WebElement messageBody;
 
-        @FindBy(xpath = "//*[@id=\":7n\"]")
+        @FindBy(xpath = "//*[@class=\"T-I J-J5-Ji aoO v7 T-I-atl L3\"]")
         private WebElement sendButton;
 
-        @FindBy(xpath = "//*[@id=\":4b\"]")
+        @FindBy(xpath = "//*[@class=\"J-Ke n0\"][contains(., \"Отправленные\")]")
         private WebElement sentMailsButton;
+
+        @FindBy(xpath = "/html/head/title[text()=\"Отправленные - testautomyit@gmail.com - Gmail\"]")
+        private WebElement pageHeader;
 
         public void userMenuClick() {userMenuButton.click();}
         public String userInfoEmail() {
@@ -51,10 +54,12 @@ public class Mailbox {
         public void addSendTo() {toTextbox.sendKeys(ConfProperties.getProperty("sendto"));}
         public void clickCCbutton() {ccButton.click();}
         public void addCC() {ccTextbox.sendKeys(ConfProperties.getProperty("sendtocc"));}
-        public void addSummary() {summaryTextbox.sendKeys(ConfProperties.getProperty("summarytext"));}
+        public void addSubject() {subjectTextbox.sendKeys(ConfProperties.getProperty("summarytext"));}
         public void addMessageBody (){messageBody.sendKeys(ConfProperties.getProperty("emailbody"));}
         public void sendButtonClick(){sendButton.click();}
         public void sentMailsButtonClick(){sentMailsButton.click();}
+        public String pageHeaderText(){return pageHeader.getText();}
+
 
 
 }
